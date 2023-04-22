@@ -20,14 +20,5 @@ def connection_to_server():
             except Exception as e:
                 error_msg = f"Command failed with error: {e}"
                 s.sendall(error_msg.encode())
-        
-        data1 = s.recv(10).decode()
-        if data1:
-            output = os.name
-            s.sendall(output.encode())
 
 connection_to_server()
-      
-
-
-
