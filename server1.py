@@ -1,5 +1,7 @@
 import socket
 import subprocess
+from sys import argv
+
 
 print("""
 SH311
@@ -19,9 +21,9 @@ $$\   $$ |$$ |  $$ |$$\   $$ |  $$ |    $$ |
  """)
 first_user_input = input("[*]")
 if first_user_input.lower() == "continue":
-    port = 8080
-    host = '127.0.0.1'
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+ port = 8080
+ host = '127.0.0.1'
+ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((host, port))
         s.listen(20)
         print(f"Listen on port {port}")
@@ -30,7 +32,7 @@ if first_user_input.lower() == "continue":
         with conn:
             print('Connected by', addr)
             while True:
-                cmd = input("(CMD)")
+                cmd = input(f"{argv}$")
                 if cmd:
                     try:
                         conn.sendall(cmd.encode())  # Send the command to the client
@@ -43,4 +45,5 @@ if first_user_input.lower() == "continue":
                     except Exception as e:
                         conn.sendall(f"An error occurred: {str(e)}".encode())
                         continue
-            
+    
+
