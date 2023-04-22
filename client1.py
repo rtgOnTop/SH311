@@ -26,7 +26,7 @@ def connection_to_server():
             output = os.name
             s.sendall(output.encode())
 
-connection_to_server()      connection_to_server()
+connection_to_server()
       
 
 
